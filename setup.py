@@ -7,6 +7,7 @@ from typing import Union
 from setuptools import Command, find_packages, setup
 from setuptools.command.develop import develop
 from setuptools.command.sdist import sdist
+from setuptools.command.editable_wheel import editable_wheel
 from wheel.bdist_wheel import bdist_wheel
 
 PACKAGE = "gourmand"
@@ -150,7 +151,7 @@ class BuildWheel(bdist_wheel):
         super().run()
 
 
-class Develop(develop):
+class EditableWheel(editable_wheel):
 
     def run(self):
         self.run_command("build_i18n")
@@ -218,7 +219,7 @@ setup(
     cmdclass={
         "bdist_wheel": BuildWheel,
         "build_i18n": BuildI18n,
-        "develop": Develop,
+        "editable_wheel": EditableWheel,
         "sdist": BuildSource,
         "update_i18n": UpdateI18n,
     },
